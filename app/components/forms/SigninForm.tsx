@@ -1,7 +1,9 @@
 "use client";
-import React from "react";
 import clsx from "clsx";
+import React, { useState } from "react";
+import { signIn } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useSearchParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { z } from "zod";
@@ -23,6 +25,12 @@ const SigninSchema = z.object({
 type SigninType = z.infer<typeof SigninSchema>;
 
 const SigninForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [signInError, setSignInError] = useState("");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
   const {
     register,
     handleSubmit,
@@ -30,7 +38,27 @@ const SigninForm = () => {
   } = useForm<SigninType>({
     resolver: zodResolver(SigninSchema),
   });
-  const onSubmit: SubmitHandler<SigninType> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<SigninType> = async (data) => {
+    try {
+      setIsLoading(true);
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+        callbackUrl,
+      });
+      setIsLoading(false);
+      if (!res?.error) {
+        router.push(callbackUrl);
+      } else {
+        alert("Invalid email or password")
+        // setError("invalid email or password");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <form
