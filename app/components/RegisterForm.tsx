@@ -38,7 +38,6 @@ const RegisterForm = () => {
   });
   const onSubmit: SubmitHandler<RegisterType> = (data) => console.log(data);
 
-  console.log("errors ", errors);
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
