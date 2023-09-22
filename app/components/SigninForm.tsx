@@ -17,7 +17,7 @@ const SigninSchema = z.object({
     .string()
     .trim()
     .min(5, { message: "Password must be 5 or more characters long" })
-    .max(8, { message: "Password cannot be longer than 8 characters" }),
+    .max(12, { message: "Password cannot be longer than 12 characters" }),
 });
 
 type SigninType = z.infer<typeof SigninSchema>;
