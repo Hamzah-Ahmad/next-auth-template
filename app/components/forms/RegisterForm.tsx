@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import clsx from "clsx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
@@ -79,7 +79,7 @@ const RegisterForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96"
     >
       <div className="mb-4">
         <label
@@ -98,6 +98,11 @@ const RegisterForm = () => {
           placeholder="Name"
           {...register("name")}
         />
+        {errors.name && (
+          <small className=" text-red-400 text-xs">
+            *{errors.name.message}
+          </small>
+        )}
       </div>
       <div className="mb-6">
         <label
@@ -116,6 +121,11 @@ const RegisterForm = () => {
           placeholder="Email"
           {...register("email")}
         />
+        {errors.email && (
+          <small className=" text-red-400 text-xs">
+            *{errors.email.message}
+          </small>
+        )}
       </div>
       <div className="mb-6">
         <label
@@ -126,7 +136,7 @@ const RegisterForm = () => {
         </label>
         <input
           className={clsx(
-            "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline",
+            "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
             errors.password && "border-red-500"
           )}
           id="password"
@@ -134,18 +144,23 @@ const RegisterForm = () => {
           placeholder="******************"
           {...register("password")}
         />
+        {errors.password && (
+          <small className=" text-red-400 text-xs">
+            *{errors.password.message}
+          </small>
+        )}
       </div>
 
       <div className="flex items-center justify-between">
         <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
+          className="bg-neutral-950 hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
           type="submit"
         >
           Register
         </button>
       </div>
 
-      <div className="mt-4">
+      {/* <div className="mt-4">
         {errors.name && (
           <div className=" text-red-400 text-xs">* {errors.name.message}</div>
         )}
@@ -157,7 +172,7 @@ const RegisterForm = () => {
             * {errors.password.message}
           </div>
         )}
-      </div>
+      </div> */}
     </form>
   );
 };
