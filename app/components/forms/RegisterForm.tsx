@@ -1,10 +1,12 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import clsx from "clsx";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { z } from "zod";
+import { signIn } from "next-auth/react";
+import { useSearchParams } from "next/navigation";
 
 const RegisterSchema = z.object({
   name: z
@@ -26,9 +28,13 @@ const RegisterSchema = z.object({
     .max(12, { message: "Password cannot be longer than 12 characters" }),
 });
 
-type RegisterType = z.infer<typeof RegisterSchema>;
+export type RegisterType = z.infer<typeof RegisterSchema>;
 
 const RegisterForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const searchParams = useSearchParams();
+  const callbackUrl = searchParams.get("callbackUrl") || "/";
+
   const {
     register,
     handleSubmit,
@@ -36,7 +42,39 @@ const RegisterForm = () => {
   } = useForm<RegisterType>({
     resolver: zodResolver(RegisterSchema),
   });
-  const onSubmit: SubmitHandler<RegisterType> = (data) => console.log(data);
+
+  const onSubmit: SubmitHandler<RegisterType> = async (data) => {
+    try {
+      const res = await fetch("/api/register", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
+      setIsLoading(false);
+      if (!res.ok) {
+        const resp = await res.json();
+        if (resp?.code === "P2002") {
+          alert("User Email Taken");
+          return;
+        }
+
+        alert("Something went wrong");
+        return;
+      }
+
+      signIn("credentials", {
+        email: data.email,
+        password: data.password,
+        redirect: true,
+        callbackUrl,
+      });
+    } catch (error: any) {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <form

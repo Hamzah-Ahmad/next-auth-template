@@ -43,7 +43,7 @@ const SigninForm = () => {
     try {
       setIsLoading(true);
       const res = await signIn("credentials", {
-        redirect: false,
+        redirect: true,
         email: data.email,
         password: data.password,
         callbackUrl,
@@ -52,7 +52,7 @@ const SigninForm = () => {
       if (!res?.error) {
         router.push(callbackUrl);
       } else {
-        alert("Invalid email or password")
+        alert("Invalid email or password");
         // setError("invalid email or password");
       }
     } catch (err) {
