@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Link from "next/link";
 import Header from "./components/Header";
+import ApiCallButton from "./components/ApiCallButton";
 
 export default async function Home() {
   return (
@@ -11,9 +12,7 @@ export default async function Home() {
         <Link href="/protected" className="text-xl">
           Go To Protected Page
         </Link>
-        <button className="text-white p-3 rounded-lg bg-neutral-950">
-          Make an auth protected API call
-        </button>
+        <ApiCallButton />
       </div>
     </main>
   );
