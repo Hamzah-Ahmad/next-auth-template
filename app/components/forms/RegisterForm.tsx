@@ -159,6 +159,16 @@ const RegisterForm = () => {
           Register
         </button>
       </div>
+      <hr className="h-0.5 border-t-0 bg-neutral-950 opacity-100 dark:opacity-50 my-6" />
+      <div className="flex items-center justify-between">
+        <button
+          className="text-white p-2 rounded-lg bg-neutral-950 hover:bg-neutral-600 font-bold  px-4  focus:outline-none focus:shadow-outline w-full"
+          type="button"
+          onClick={() => signIn("google", { callbackUrl })}
+        >
+          Sign In With Google
+        </button>
+      </div>
 
       {/* <div className="mt-4">
         {errors.name && (

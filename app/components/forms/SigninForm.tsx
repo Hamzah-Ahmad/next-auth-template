@@ -61,67 +61,65 @@ const SigninForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96"
-    >
-      <div className="mb-6">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="email"
-        >
-          Email
-        </label>
-        <input
-          className={clsx(
-            "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-            errors.email && "border-red-500"
+    <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4 w-96">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="email"
+          >
+            Email
+          </label>
+          <input
+            className={clsx(
+              "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+              errors.email && "border-red-500"
+            )}
+            id="email"
+            type="text"
+            placeholder="Email"
+            {...register("email")}
+          />
+          {errors.email && (
+            <small className=" text-red-400 text-xs">
+              * {errors.email.message}
+            </small>
           )}
-          id="email"
-          type="text"
-          placeholder="Email"
-          {...register("email")}
-        />
-        {errors.email && (
-          <small className=" text-red-400 text-xs">
-            * {errors.email.message}
-          </small>
-        )}
-      </div>
-      <div className="mb-6">
-        <label
-          className="block text-gray-700 text-sm font-bold mb-2"
-          htmlFor="password"
-        >
-          Password
-        </label>
-        <input
-          className={clsx(
-            "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
-            errors.password && "border-red-500"
+        </div>
+        <div className="mb-6">
+          <label
+            className="block text-gray-700 text-sm font-bold mb-2"
+            htmlFor="password"
+          >
+            Password
+          </label>
+          <input
+            className={clsx(
+              "shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline",
+              errors.password && "border-red-500"
+            )}
+            id="password"
+            type="password"
+            placeholder="******************"
+            {...register("password")}
+          />
+          {errors.password && (
+            <small className=" text-red-400 text-xs">
+              *{errors.password.message}
+            </small>
           )}
-          id="password"
-          type="password"
-          placeholder="******************"
-          {...register("password")}
-        />
-        {errors.password && (
-          <small className=" text-red-400 text-xs">
-            *{errors.password.message}
-          </small>
-        )}
-      </div>
+        </div>
 
-      <div className="flex items-center justify-between">
-        <button
-          className="text-white p-2 rounded-lg bg-neutral-950 hover:bg-neutral-600 font-bold py-2 px-4  focus:outline-none focus:shadow-outline w-full"
-          type="submit"
-        >
-          Sign In
-        </button>
-      </div>
+        <div className="flex items-center justify-between">
+          <button
+            className="text-white p-2 rounded-lg bg-neutral-950 hover:bg-neutral-600 font-bold py-2 px-4  focus:outline-none focus:shadow-outline w-full"
+            type="submit"
+          >
+            Sign In
+          </button>
+        </div>
 
-      {/* <div className="mt-4">
+        {/* <div className="mt-4">
         {errors.email && (
           <div className=" text-red-400 text-xs">* {errors.email.message}</div>
         )}
@@ -131,7 +129,18 @@ const SigninForm = () => {
           </div>
         )}
       </div> */}
-    </form>
+      </form>
+      <hr className="h-0.5 border-t-0 bg-neutral-950 opacity-100 dark:opacity-50 my-6" />
+      <div className="flex items-center justify-between">
+        <button
+          className="text-white p-2 rounded-lg bg-neutral-950 hover:bg-neutral-600 font-bold  px-4  focus:outline-none focus:shadow-outline w-full"
+          type="button"
+          onClick={() => signIn("google", { callbackUrl })}
+        >
+          Sign In With Google
+        </button>
+      </div>
+    </div>
   );
 };
 
