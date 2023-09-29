@@ -1,7 +1,7 @@
 
-# [NextAuth.js Example]
+# NextAuth.js Example
 
-## [About this project]
+## About this project
 
 This is a Next.js auth template  [NextAuth.js](https://next-auth.js.org/)  library to add Credential and Google authentication to a  Next.js application.
 Technologies used:
