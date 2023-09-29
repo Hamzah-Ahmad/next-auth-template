@@ -7,6 +7,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { z } from "zod";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 
 const RegisterSchema = z.object({
   name: z
@@ -45,6 +46,7 @@ const RegisterForm = () => {
 
   const onSubmit: SubmitHandler<RegisterType> = async (data) => {
     try {
+      setIsLoading(true);
       const res = await fetch("/api/register", {
         method: "POST",
         body: JSON.stringify(data),
@@ -155,34 +157,25 @@ const RegisterForm = () => {
         <button
           className="bg-neutral-950 hover:bg-neutral-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full"
           type="submit"
+          disabled={isLoading}
         >
-          Register
+          {isLoading ? "Loading..." : "Register"}
         </button>
       </div>
+      <Link href="/signin" className="text-sm underline flex justify-end mt-2">
+        Already a member? Sign In
+      </Link>
       <hr className="h-0.5 border-t-0 bg-neutral-950 opacity-100 dark:opacity-50 my-6" />
       <div className="flex items-center justify-between">
         <button
           className="text-white p-2 rounded-lg bg-neutral-950 hover:bg-neutral-600 font-bold  px-4  focus:outline-none focus:shadow-outline w-full"
           type="button"
+          disabled={isLoading}
           onClick={() => signIn("google", { callbackUrl })}
         >
           Sign In With Google
         </button>
       </div>
-
-      {/* <div className="mt-4">
-        {errors.name && (
-          <div className=" text-red-400 text-xs">* {errors.name.message}</div>
-        )}
-        {errors.email && (
-          <div className=" text-red-400 text-xs">* {errors.email.message}</div>
-        )}
-        {errors.password && (
-          <div className=" text-red-400 text-xs">
-            * {errors.password.message}
-          </div>
-        )}
-      </div> */}
     </form>
   );
 };

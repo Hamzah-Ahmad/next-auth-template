@@ -7,6 +7,7 @@ import { useSearchParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 import { z } from "zod";
+import Link from "next/link";
 
 const SigninSchema = z.object({
   email: z
@@ -26,11 +27,9 @@ type SigninType = z.infer<typeof SigninSchema>;
 
 const SigninForm = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [signInError, setSignInError] = useState("");
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/";
-
   const {
     register,
     handleSubmit,
@@ -43,7 +42,7 @@ const SigninForm = () => {
     try {
       setIsLoading(true);
       const res = await signIn("credentials", {
-        redirect: true,
+        redirect: false, // Setting redirect as true was causing an issue of refreshing the browser oon incorrect credentails. Due to this, incorrect  credentials error was not being displayed
         email: data.email,
         password: data.password,
         callbackUrl,
@@ -114,27 +113,28 @@ const SigninForm = () => {
           <button
             className="text-white p-2 rounded-lg bg-neutral-950 hover:bg-neutral-600 font-bold py-2 px-4  focus:outline-none focus:shadow-outline w-full"
             type="submit"
+            disabled={isLoading}
           >
-            Sign In
+            {isLoading ? "Loading..." : "Sign In"}
           </button>
         </div>
-
-        {/* <div className="mt-4">
-        {errors.email && (
-          <div className=" text-red-400 text-xs">* {errors.email.message}</div>
-        )}
-        {errors.password && (
-          <div className=" text-red-400 text-xs">
-            * {errors.password.message}
-          </div>
-        )}
-      </div> */}
+        <Link
+          href={
+            searchParams.get("callbackUrl")
+              ? `/register?callbackUrl=${callbackUrl}`
+              : "/register"
+          }
+          className="text-sm underline flex justify-end mt-2"
+        >
+          Create an account
+        </Link>
       </form>
       <hr className="h-0.5 border-t-0 bg-neutral-950 opacity-100 dark:opacity-50 my-6" />
       <div className="flex items-center justify-between">
         <button
           className="text-white p-2 rounded-lg bg-neutral-950 hover:bg-neutral-600 font-bold  px-4  focus:outline-none focus:shadow-outline w-full"
           type="button"
+          disabled={isLoading}
           onClick={() => signIn("google", { callbackUrl })}
         >
           Sign In With Google

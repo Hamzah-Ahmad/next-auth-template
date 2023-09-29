@@ -9,7 +9,7 @@ export default async function Home() {
     <main className="h-screen w-full">
       <Header />
       <div className="h-2/3 flex items-center justify-center gap-24">
-        <Link href="/protected" className="text-xl">
+        <Link href="/protected" className="text-xl underline">
           Go To Protected Page
         </Link>
         <ApiCallButton />
