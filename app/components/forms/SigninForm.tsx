@@ -1,13 +1,13 @@
 "use client";
 import clsx from "clsx";
+import { z } from "zod";
+import Link from "next/link";
 import React, { useState } from "react";
 import { signIn } from "next-auth/react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSearchParams, useRouter } from "next/navigation";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { useSearchParams, useRouter } from "next/navigation";
 
-import { z } from "zod";
-import Link from "next/link";
 
 const SigninSchema = z.object({
   email: z

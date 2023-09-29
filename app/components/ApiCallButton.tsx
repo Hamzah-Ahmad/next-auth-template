@@ -1,5 +1,4 @@
 "use client";
-
 const protectedCall = async () => {
   try {
     const res = await fetch("/api/protected", {

@@ -1,13 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
 import clsx from "clsx";
+import { z } from "zod";
+import Link from "next/link";
+import { signIn } from "next-auth/react";
+import React, { useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 
-import { z } from "zod";
-import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
 
 const RegisterSchema = z.object({
   name: z

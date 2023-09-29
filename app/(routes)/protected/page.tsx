@@ -1,6 +1,7 @@
-import Header from "@/app/components/Header";
-import Link from "next/link";
 import React from "react";
+import Link from "next/link";
+
+import Header from "@/app/components/Header";
 
 const Protected = () => {
   return (

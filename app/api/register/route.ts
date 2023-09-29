@@ -1,7 +1,8 @@
-import { RegisterType } from "@/app/components/forms/RegisterForm";
-import { prisma } from "@/lib/prisma";
 import { hash } from "bcryptjs";
 import { NextResponse } from "next/server";
+
+import { prisma } from "@/lib/prisma";
+import { RegisterType } from "@/app/components/forms/RegisterForm";
 
 export async function POST(req: Request) {
   try {

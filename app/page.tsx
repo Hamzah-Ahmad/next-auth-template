@@ -1,6 +1,5 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "./api/auth/[...nextauth]/route";
 import Link from "next/link";
+
 import Header from "./components/Header";
 import ApiCallButton from "./components/ApiCallButton";
 
